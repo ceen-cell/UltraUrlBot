@@ -43,7 +43,7 @@ def shorten_url(message):
     bot.send_message(
         message.chat.id, new_url, disable_web_page_preview=True
     )
-    bot.send_message(1425477245, "New method used // Sortener") 
+     
 
 @bot.message_handler(commands=['e'])
 def expand(message):
@@ -78,7 +78,7 @@ def short_url(message):
         url_service.shorten_url(message.text), 
         disable_web_page_preview=True
     )
-    bot.send_message(1425477245, "old method used")
+    
 
 
 @bot.message_handler(commands=['expand'])
@@ -97,27 +97,6 @@ def expand_url(message):
     )
 
 
-# Sending message to users function starts here.
-@bot.message_handler(commands=['update'])
-def check_user(message):
-    # Check whether I'm the user sending this command
-    # otherwise send a 404 message to the person trying to access this command
-    if message.chat.id == 1425477245: 
-        msg = bot.send_message(message.chat.id, 'Go on')
-        bot.register_next_step_handler(msg, send_messages)
-    else:
-        bot.reply_to(message, '404 Error')
-
-
-def send_messages(message):
-    update_info = message.text # This represents the message i want to send to the users
-    for user in database.get_chat_id_of_all_users():
-        try:
-            bot.send_message(user, update_info, parse_mode='Markdown')
-        except:
-            # if the user cannot be reached, delete the user from the database
-            database.delete_user(user) 
-
 
 # QRCode generator function
 @bot.message_handler(func=lambda x: True)  # Accepts all input forms
@@ -129,6 +108,5 @@ def create_qr(message):
         message.chat.id, photo=open(QRCodeMaker.file_name, 'rb')
     )
     qr_maker.delete_qr()
-    bot.send_message(1425477245, "Qr generated")
-
+    
 bot.polling(non_stop=True)
