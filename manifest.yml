@@ -1,0 +1,7 @@
+applications:
+- name: UltraUrlBot
+  random-route: true
+  health-check-type: process
+  command: python bot.py
+  memory: 256M
+ 
